@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React, { useState, useEffect } from 'react';
+import AppRouter from './Router';
 
-function App() {
+const App = () => {
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    // Check if token exists in session storage and set it in state
+    const storedToken = sessionStorage.getItem('token');
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {token ? (
+        <AppRouter />
+      ) : (
+        <p>You need to login to access the dashboard.</p>
+      )}
     </div>
   );
-}
+};
 
 export default App;
